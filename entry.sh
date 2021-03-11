@@ -37,8 +37,8 @@ if [[ ${BRANCH} =~ $ref_regex ]]; then
         z) season=zima ;;
         l) season=leto ;;
     esac
-    PART_PATH="${BASH_REMATCH[1]}rocnik/${season}${BASH_REMATCH[3]}"
-    TASK_PATH="${PART_PATH}/prikl${BASH_REMATCH[5]}"
+    PART_PATH="$(realpath "${BASH_REMATCH[1]}rocnik/${season}${BASH_REMATCH[3]}")"
+    TASK_PATH="$(realpath "${PART_PATH}/prikl${BASH_REMATCH[5]}")"
     OUT_PATH="$(pwd)/ci_out"
     mkdir -p "$OUT_PATH"
     export PART_PATH TASK_PATH OUT_PATH
