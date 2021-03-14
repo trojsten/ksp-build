@@ -3,8 +3,6 @@
 set -e
 
 build_task() {
-    # TODO use a different template which does not include
-    # other tasks in this context
     cd "$PART_PATH"
 
     if [ ! -e "$TASK_PATH/zadanie.md" ]; then
@@ -12,14 +10,8 @@ build_task() {
         exit 1
     fi
 
-    make pdf-zad
-    cp zadania/zadania.pdf "$OUT_PATH"
-    if [ -e "$TASK_PATH/vzorak.md" ]; then
-        make pdf-vzor
-        cp vzoraky/vzoraky.pdf "$OUT_PATH"
-    else
-        >&2 echo vzorak.md not found, ignoring
-    fi
+    make "single-$TASK.pdf"
+    cp "single-$TASK.pdf" "$OUT_PATH/combined.pdf"
 }
 
 build_part() {
@@ -39,9 +31,10 @@ if [[ ${BRANCH} =~ $ref_regex ]]; then
     esac
     PART_PATH="$(realpath "${BASH_REMATCH[1]}rocnik/${season}${BASH_REMATCH[3]}")"
     TASK_PATH="$(realpath "${PART_PATH}/prikl${BASH_REMATCH[5]}")"
+    TASK="prikl${BASH_REMATCH[5]}"
     OUT_PATH="$(pwd)/ci_out"
     mkdir -p "$OUT_PATH"
-    export PART_PATH TASK_PATH OUT_PATH
+    export PART_PATH TASK_PATH OUT_PATH TASK
     case "${GITHUB_EVENT_NAME}" in
         pull_request)
             build_task ;;
