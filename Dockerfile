@@ -1,6 +1,6 @@
-FROM alpine:3.13
+FROM alpine:3.15
 
-ARG PANDOC_VERSION=2.12
+ARG PANDOC_VERSION=2.19.2
 
 RUN apk add --no-cache \
         make \
