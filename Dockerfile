@@ -6,6 +6,7 @@ RUN apk add --no-cache \
         make \
         bash \
         python2 \
+        python3 \
         texlive \
         texlive-luatex \
         texmf-dist-latexextra
