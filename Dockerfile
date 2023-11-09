@@ -6,7 +6,10 @@ RUN apk add --no-cache \
         bash \
         make \
         python3 \
+        py3-pip \
         tectonic
+
+RUN pip3 install Pygments
 
 RUN wget "https://github.com/jgm/pandoc/releases/download/$PANDOC_VERSION/pandoc-$PANDOC_VERSION-linux-amd64.tar.gz" -O /tmp/pandoc.tar.gz
 RUN tar -xzf /tmp/pandoc.tar.gz --strip-components 1 -C /usr/local
